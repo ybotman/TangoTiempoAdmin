@@ -1,12 +1,5 @@
-import {
-  Box,
-  IconButton,
-  List,
-  ListItem,
-  ListItemText,
-  Typography,
-} from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
+import { Box, List, Typography } from '@mui/material';
+import CategoryListItem from './CategoryListItem';
 
 async function CategoriesPage() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BE_URL}/api/categories`);
@@ -18,16 +11,7 @@ async function CategoriesPage() {
 
       <List sx={{ bgcolor: 'grey.50', mt: 2 }}>
         {categories.map((category) => (
-          <ListItem
-            key={category._id}
-            secondaryAction={
-              <IconButton aria-label="edit">
-                <EditIcon />
-              </IconButton>
-            }
-          >
-            <ListItemText primary={category.categoryName} />
-          </ListItem>
+          <CategoryListItem key={category._id} category={category} />
         ))}
       </List>
     </Box>
