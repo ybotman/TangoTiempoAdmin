@@ -2,7 +2,9 @@ import { Box, List, Typography } from '@mui/material';
 import CategoryListItem from './CategoryListItem';
 
 async function CategoriesPage() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BE_URL}/api/categories`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BE_URL}/api/categories`, {
+    cache: 'no-cache',
+  });
   const categories = await res.json();
 
   return (
