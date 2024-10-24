@@ -1,5 +1,6 @@
 import { Box, List, Typography } from '@mui/material';
-import CategoryListItem from './CategoryListItem';
+import CategoryListItem from './components/CategoryListItem';
+import CategoryInsert from './components/CategoryInsert';
 
 async function CategoriesPage() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BE_URL}/api/categories`, {
@@ -10,8 +11,8 @@ async function CategoriesPage() {
   return (
     <Box>
       <Typography variant="h3">Categories</Typography>
-
-      <List sx={{ bgcolor: 'grey.50', mt: 2 }}>
+      <CategoryInsert />
+      <List sx={{ bgcolor: 'grey.50', mt: 1 }}>
         {categories.map((category) => (
           <CategoryListItem key={category._id} category={category} />
         ))}
