@@ -1,62 +1,28 @@
-'use client';
-
-import { useState } from 'react';
-import { ListItem, ListItemText, IconButton } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { ListItem, ListItemText } from '@mui/material';
 import PropTypes from 'prop-types';
-import CategoryEditDialog from './CategoryEditDialog';
-import CategoryDeleteDialog from './CategoryDeleteDialog';
+import CategoryEdit from './CategoryEdit';
+import CategoryDelete from './CategoryDelete';
 
 function CategoryListItem({ category, onEdit, onDelete, showAlert }) {
-  const [editDialogOpen, setEditDialogOpen] = useState(false);
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-
-  const handleEditClick = () => {
-    setEditDialogOpen(true);
-  };
-
-  const handleEditDialogClose = () => {
-    setEditDialogOpen(false);
-  };
-
-  const handleDeleteClick = () => {
-    setDeleteDialogOpen(true);
-  };
-
-  const handleDeleteDialogClose = () => {
-    setDeleteDialogOpen(false);
-  };
-
   return (
     <ListItem
       key={category._id}
       secondaryAction={
         <>
-          <IconButton aria-label="edit" onClick={handleEditClick}>
-            <EditIcon />
-          </IconButton>
-          <IconButton aria-label="delete" onClick={handleDeleteClick}>
-            <DeleteIcon />
-          </IconButton>
+          <CategoryEdit
+            category={category}
+            onEdit={onEdit}
+            showAlert={showAlert}
+          />
+          <CategoryDelete
+            category={category}
+            onDelete={onDelete}
+            showAlert={showAlert}
+          />
         </>
       }
     >
       <ListItemText primary={category.categoryName} />
-      <CategoryEditDialog
-        open={editDialogOpen}
-        onClose={handleEditDialogClose}
-        category={category}
-        onEdit={onEdit}
-        showAlert={showAlert}
-      />
-      <CategoryDeleteDialog
-        open={deleteDialogOpen}
-        category={category}
-        onClose={handleDeleteDialogClose}
-        onDelete={onDelete}
-        showAlert={showAlert}
-      />
     </ListItem>
   );
 }
