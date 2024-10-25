@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import PropTypes from 'prop-types';
 
-function CategoryInsert({ onInsert }) {
+function CategoryInsert({ onInsert, showAlert }) {
   const [open, setOpen] = useState(false);
 
   const handleInsertClick = () => {
@@ -29,20 +29,27 @@ function CategoryInsert({ onInsert }) {
     const categoryName = event.target.categoryName.value;
     const categoryCode = event.target.categoryCode.value;
 
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BE_URL}/api/categories`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ categoryName, categoryCode }),
-      }
-    );
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BE_URL}/api/categories`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ categoryName, categoryCode }),
+        }
+      );
 
-    if (res.ok) {
-      onInsert();
-      handleInsertDialogClose();
+      if (res.ok) {
+        showAlert('Category inserted successfully!', 'success');
+        onInsert();
+        handleInsertDialogClose();
+      } else {
+        showAlert('Failed to insert category.', 'error');
+      }
+    } catch (error) {
+      showAlert('An unexpected error occurred.', 'error');
     }
   };
 
@@ -78,6 +85,7 @@ function CategoryInsert({ onInsert }) {
 
 CategoryInsert.propTypes = {
   onInsert: PropTypes.func.isRequired,
+  showAlert: PropTypes.func.isRequired,
 };
 
 export default CategoryInsert;
