@@ -14,14 +14,14 @@ import {
 import PropTypes from 'prop-types';
 
 function CategoryInsert({ onInsert, showAlert }) {
-  const [open, setOpen] = useState(false);
+  const [insertDialogOpen, setInsertDialogOpen] = useState(false);
 
   const handleInsertClick = () => {
-    setOpen(true);
+    setInsertDialogOpen(true);
   };
 
   const handleInsertDialogClose = () => {
-    setOpen(false);
+    setInsertDialogOpen(false);
   };
 
   const handleSubmit = async (event) => {
@@ -59,7 +59,7 @@ function CategoryInsert({ onInsert, showAlert }) {
         Insert category
       </Button>
       <Dialog
-        open={open}
+        open={insertDialogOpen}
         onClose={handleInsertDialogClose}
         maxWidth="md"
         fullWidth
