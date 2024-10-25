@@ -6,7 +6,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import PropTypes from 'prop-types';
 import CategoryEditDialog from './CategoryEditDialog';
 
-function CategoryListItem({ category }) {
+function CategoryListItem({ category, onEdit }) {
   const [editDialogOpen, setEditDialogOpen] = useState(false);
 
   const handleEditClick = () => {
@@ -31,6 +31,7 @@ function CategoryListItem({ category }) {
         open={editDialogOpen}
         onClose={handleEditDialogClose}
         category={category}
+        onEdit={onEdit}
       />
     </ListItem>
   );
@@ -42,6 +43,7 @@ CategoryListItem.propTypes = {
     categoryName: PropTypes.string.isRequired,
     categoryCode: PropTypes.string.isRequired,
   }).isRequired,
+  onEdit: PropTypes.func.isRequired,
 };
 
 export default CategoryListItem;

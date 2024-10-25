@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import PropTypes from 'prop-types';
 
-function CategoryEditDialog({ open, onClose, category }) {
+function CategoryEditDialog({ open, onClose, category, onEdit }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const categoryId = event.target.categoryId.value;
@@ -28,10 +28,7 @@ function CategoryEditDialog({ open, onClose, category }) {
     );
 
     if (res.ok) {
-      // Update the category with the response
-      const updatedCategory = await res.json();
-      Object.assign(category, updatedCategory);
-
+      onEdit();
       onClose();
     }
   };
@@ -84,6 +81,7 @@ CategoryEditDialog.propTypes = {
     categoryName: PropTypes.string.isRequired,
     categoryCode: PropTypes.string.isRequired,
   }),
+  onEdit: PropTypes.func.isRequired,
 };
 
 export default CategoryEditDialog;

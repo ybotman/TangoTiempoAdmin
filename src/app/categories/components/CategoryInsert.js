@@ -11,8 +11,9 @@ import {
   Stack,
   TextField,
 } from '@mui/material';
+import PropTypes from 'prop-types';
 
-function CategoryInsert() {
+function CategoryInsert({ onInsert }) {
   const [open, setOpen] = useState(false);
 
   const handleInsertClick = () => {
@@ -40,9 +41,7 @@ function CategoryInsert() {
     );
 
     if (res.ok) {
-      // Insert the new category into the list
-      const newCategory = await res.json();
-      console.log(newCategory);
+      onInsert();
       handleInsertDialogClose();
     }
   };
@@ -76,5 +75,9 @@ function CategoryInsert() {
     </Box>
   );
 }
+
+CategoryInsert.propTypes = {
+  onInsert: PropTypes.func.isRequired,
+};
 
 export default CategoryInsert;
