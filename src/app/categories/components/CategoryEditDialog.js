@@ -66,7 +66,9 @@ function CategoryEditDialog({ open, onClose, category }) {
           />
           <DialogActions>
             <Button onClick={onClose}>Cancel</Button>
-            <Button type="submit">Save</Button>
+            <Button variant="contained" type="submit">
+              Insert
+            </Button>
           </DialogActions>
         </Stack>
       </DialogContent>
