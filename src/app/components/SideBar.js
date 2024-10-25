@@ -2,6 +2,7 @@ import { Box, List, Divider } from '@mui/material';
 import PeopleIcon from '@mui/icons-material/People';
 import EventIcon from '@mui/icons-material/Event';
 import CategoryIcon from '@mui/icons-material/Category';
+import KeyIcon from '@mui/icons-material/Key';
 import SideBarItem from './SideBarItem';
 
 function SideBar() {
@@ -14,6 +15,11 @@ function SideBar() {
           primaryText="Categories"
           href="/categories"
           icon={<CategoryIcon />}
+        />
+        <SideBarItem
+          primaryText="Permissions"
+          href="/permissions"
+          icon={<KeyIcon />}
         />
       </List>
       <Divider />
