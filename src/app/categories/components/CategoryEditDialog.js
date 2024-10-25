@@ -66,11 +66,13 @@ function CategoryEditDialog({ open, onClose, category, onEdit, showAlert }) {
             id="categoryName"
             label="Category Name"
             defaultValue={category.categoryName}
+            required
           />
           <TextField
             id="categoryCode"
             label="Category Code"
             defaultValue={category.categoryCode}
+            required
           />
         </Stack>
       </DialogContent>

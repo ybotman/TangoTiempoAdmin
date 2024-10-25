@@ -8,7 +8,6 @@ import {
   Typography,
   Snackbar,
   Alert,
-  ListItem,
 } from '@mui/material';
 import useSWR from 'swr';
 import CategoryListItem from './components/CategoryListItem';
@@ -78,6 +77,7 @@ function CategoriesPage() {
               key={category._id}
               category={category}
               onEdit={mutate}
+              onDelete={mutate}
               showAlert={showAlert}
             />
           ))}
