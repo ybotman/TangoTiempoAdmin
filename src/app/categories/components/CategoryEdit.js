@@ -11,6 +11,7 @@ import {
   Stack,
   TextField,
   IconButton,
+  Divider,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import PropTypes from 'prop-types';
@@ -79,6 +80,7 @@ function CategoryEdit({ category, onEdit, showAlert }) {
               defaultValue={category._id}
               disabled
             />
+            <Divider />
             <TextField
               id="categoryName"
               label="Category Name"

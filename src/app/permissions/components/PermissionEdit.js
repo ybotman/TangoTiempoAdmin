@@ -10,6 +10,7 @@ import {
   Stack,
   TextField,
   IconButton,
+  Divider,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import PropTypes from 'prop-types';
@@ -77,6 +78,7 @@ function PermissionEdit({ permission, onEdit, showAlert }) {
               defaultValue={permission._id}
               disabled
             />
+            <Divider />
             <TextField
               id="permissionName"
               label="Permission Name"
