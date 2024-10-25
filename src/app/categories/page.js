@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Box,
   List,
@@ -8,6 +8,7 @@ import {
   Typography,
   Snackbar,
   Alert,
+  ListItem,
 } from '@mui/material';
 import useSWR from 'swr';
 import CategoryListItem from './components/CategoryListItem';
@@ -46,14 +47,31 @@ function CategoriesPage() {
     setAlert({ ...alert, open: false });
   };
 
+  // useEffect to handle fetch errors
+  useEffect(() => {
+    if (error) {
+      showAlert('Could not fetch categories.', 'error');
+    }
+  }, [error]);
+
   return (
-    <Box>
-      <Typography variant="h3">Categories</Typography>
+    <>
       <CategoryInsert onInsert={mutate} showAlert={showAlert} />
 
       {isLoading ? (
-        <Skeleton variant="rectangular" height={500} sx={{ mt: 1 }} />
-      ) : (
+        // Render skeletons while loading
+        <Box sx={{ mt: 2 }}>
+          {[...Array(5)].map((_, index) => (
+            <Skeleton
+              key={index}
+              variant="rectangular"
+              height={50}
+              sx={{ mb: 1 }}
+            />
+          ))}
+        </Box>
+      ) : categories && categories.length > 0 ? (
+        // Render the list of categories
         <List sx={{ bgcolor: 'grey.50', mt: 1 }}>
           {categories.map((category) => (
             <CategoryListItem
@@ -64,6 +82,11 @@ function CategoriesPage() {
             />
           ))}
         </List>
+      ) : (
+        // Render a message when there are no categories
+        <Typography variant="body1" sx={{ mt: 2 }}>
+          No categories found.
+        </Typography>
       )}
 
       {/* Snackbar for Alerts */}
@@ -81,7 +104,7 @@ function CategoriesPage() {
           {alert.message}
         </Alert>
       </Snackbar>
-    </Box>
+    </>
   );
 }
 
