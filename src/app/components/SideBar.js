@@ -3,6 +3,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import EventIcon from '@mui/icons-material/Event';
 import CategoryIcon from '@mui/icons-material/Category';
 import KeyIcon from '@mui/icons-material/Key';
+import PlaceIcon from '@mui/icons-material/Place';
 import SideBarItem from './SideBarItem';
 
 function SideBar() {
@@ -20,6 +21,11 @@ function SideBar() {
           primaryText="Permissions"
           href="/permissions"
           icon={<KeyIcon />}
+        />
+        <SideBarItem
+          primaryText="Locations"
+          href="/locations"
+          icon={<PlaceIcon />}
         />
       </List>
       <Divider />
