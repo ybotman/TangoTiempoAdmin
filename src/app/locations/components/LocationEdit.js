@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Button,
   Dialog,
@@ -12,13 +12,55 @@ import {
   IconButton,
   Typography,
   Divider,
+  Autocomplete,
 } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import EditIcon from '@mui/icons-material/Edit';
 import PropTypes from 'prop-types';
 
-function LocationEdit({ location, onEdit, showAlert }) {
+function LocationEdit({ location, regions, onEdit, showAlert }) {
   const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [selectedRegion, setSelectedRegion] = useState();
+  const [selectedDivision, setSelectedDivision] = useState();
+  const [selectedCity, setSelectedCity] = useState();
+  const [divisions, setDivisions] = useState([]);
+  const [cities, setCities] = useState([]);
+
+  // Set the selected region, division, and city when the location is loaded
+  useEffect(() => {
+    const region = regions.find(
+      (region) => region._id === location.calculatedRegion
+    );
+    const division = region?.divisions.find(
+      (division) => division._id === location.calculatedDivision
+    );
+    const city = division?.majorCities.find(
+      (city) => city._id === location.calculatedCity
+    );
+    setSelectedRegion(region);
+    setDivisions(region?.divisions);
+    setSelectedDivision(division);
+    setCities(division?.majorCities);
+    setSelectedCity(city);
+  }, [location, regions]);
+
+  // Update the divisions and cities when the selected region changes
+  useEffect(() => {
+    if (selectedRegion) {
+      setDivisions(selectedRegion.divisions);
+      setSelectedDivision(selectedRegion.divisions[0]);
+      setCities(selectedRegion.divisions[0].majorCities);
+      setSelectedCity(selectedRegion.divisions[0].majorCities[0]);
+    }
+  }, [selectedRegion]);
+
+  // Update the cities when the selected division changes
+  useEffect(() => {
+    if (selectedDivision) {
+      setCities(selectedDivision.majorCities);
+      setSelectedCity(selectedDivision.majorCities[0]);
+    }
+  }, [selectedDivision]);
 
   const handleEditClick = () => {
     setEditDialogOpen(true);
@@ -42,9 +84,9 @@ function LocationEdit({ location, onEdit, showAlert }) {
     const country = event.target.country.value || 'USA';
     const latitude = parseFloat(event.target.latitude.value);
     const longitude = parseFloat(event.target.longitude.value);
-    const calculatedRegion = event.target.calculatedRegion.value;
-    const calculatedDivision = event.target.calculatedDivision.value;
-    const calculatedCity = event.target.calculatedCity.value;
+    const calculatedRegion = selectedRegion._id;
+    const calculatedDivision = selectedDivision._id;
+    const calculatedCity = selectedCity._id;
 
     try {
       const res = await fetch(
@@ -193,23 +235,41 @@ function LocationEdit({ location, onEdit, showAlert }) {
             </Grid>
             <Divider />
 
-            <TextField
+            <Autocomplete
               id="calculatedRegion"
-              label="Calculated Region ID"
-              defaultValue={location.calculatedRegion}
-              required
+              options={regions}
+              getOptionLabel={(option) => option.regionName}
+              value={selectedRegion}
+              onChange={(event, newValue) => {
+                setSelectedRegion(newValue);
+              }}
+              renderInput={(params) => (
+                <TextField {...params} label="Region" required />
+              )}
             />
-            <TextField
+            <Autocomplete
               id="calculatedDivision"
-              label="Calculated Division ID"
-              defaultValue={location.calculatedDivision}
-              required
+              options={divisions}
+              getOptionLabel={(option) => option.divisionName}
+              value={selectedDivision}
+              onChange={(event, newValue) => {
+                setSelectedDivision(newValue);
+              }}
+              renderInput={(params) => (
+                <TextField {...params} label="Division" required />
+              )}
             />
-            <TextField
+            <Autocomplete
               id="calculatedCity"
-              label="Calculated City ID"
-              defaultValue={location.calculatedCity}
-              required
+              options={cities}
+              getOptionLabel={(option) => option.cityName}
+              value={selectedCity}
+              onChange={(event, newValue) => {
+                setSelectedCity(newValue);
+              }}
+              renderInput={(params) => (
+                <TextField {...params} label="City" required />
+              )}
             />
           </Stack>
         </DialogContent>
@@ -241,6 +301,24 @@ LocationEdit.propTypes = {
     calculatedDivision: PropTypes.string.isRequired,
     calculatedCity: PropTypes.string.isRequired,
   }).isRequired,
+  regions: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      regionName: PropTypes.string.isRequired,
+      divisions: PropTypes.arrayOf(
+        PropTypes.shape({
+          _id: PropTypes.string.isRequired,
+          divisionName: PropTypes.string.isRequired,
+          majorCities: PropTypes.arrayOf(
+            PropTypes.shape({
+              _id: PropTypes.string.isRequired,
+              cityName: PropTypes.string.isRequired,
+            })
+          ),
+        })
+      ),
+    })
+  ).isRequired,
   onEdit: PropTypes.func.isRequired,
   showAlert: PropTypes.func.isRequired,
 };

@@ -22,6 +22,11 @@ function LocationsPage() {
     error,
   } = useSWR(`${process.env.NEXT_PUBLIC_BE_URL}/api/locations`, fetcher);
 
+  const { data: regions } = useSWR(
+    `${process.env.NEXT_PUBLIC_BE_URL}/api/regions/activeRegions`,
+    fetcher
+  );
+
   // State for managing alerts
   const [alert, setAlert] = useState({
     open: false,
@@ -71,6 +76,7 @@ function LocationsPage() {
             <LocationListItem
               key={location._id}
               location={location}
+              regions={regions}
               onEdit={mutate}
               onDelete={mutate}
               showAlert={showAlert}
