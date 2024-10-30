@@ -27,6 +27,11 @@ function SideBar() {
           href="/locations"
           icon={<PlaceIcon />}
         />
+        <SideBarItem
+          primaryText="Roles"
+          href="/roles"
+          icon={<KeyIcon />}
+        />
       </List>
       <Divider />
     </Box>
