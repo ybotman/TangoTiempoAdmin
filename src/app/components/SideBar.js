@@ -5,6 +5,7 @@ import CategoryIcon from '@mui/icons-material/Category';
 import KeyIcon from '@mui/icons-material/Key';
 import PlaceIcon from '@mui/icons-material/Place';
 import AddModeratorIcon from '@mui/icons-material/AddModerator';
+import BadgeIcon from '@mui/icons-material/Badge';
 import SideBarItem from './SideBarItem';
 
 function SideBar() {
@@ -21,6 +22,11 @@ function SideBar() {
           primaryText="Locations"
           href="/locations"
           icon={<PlaceIcon />}
+        />
+        <SideBarItem
+          primaryText="Organizers"
+          href="/organizers"
+          icon={<BadgeIcon />}
         />
         <SideBarItem
           primaryText="Permissions"
