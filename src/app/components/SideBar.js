@@ -4,6 +4,7 @@ import EventIcon from '@mui/icons-material/Event';
 import CategoryIcon from '@mui/icons-material/Category';
 import KeyIcon from '@mui/icons-material/Key';
 import PlaceIcon from '@mui/icons-material/Place';
+import AddModeratorIcon from '@mui/icons-material/AddModerator';
 import SideBarItem from './SideBarItem';
 
 function SideBar() {
@@ -30,7 +31,7 @@ function SideBar() {
         <SideBarItem
           primaryText="Roles"
           href="/roles"
-          icon={<KeyIcon />}
+          icon={<AddModeratorIcon />}
         />
       </List>
       <Divider />
