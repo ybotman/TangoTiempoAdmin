@@ -11,12 +11,16 @@ function SideBar() {
   return (
     <Box sx={{ overflow: 'auto' }}>
       <List>
-        <SideBarItem primaryText="Users" href="/users" icon={<PeopleIcon />} />
-        <SideBarItem primaryText="Events" href="/events" icon={<EventIcon />} />
         <SideBarItem
           primaryText="Categories"
           href="/categories"
           icon={<CategoryIcon />}
+        />
+        <SideBarItem primaryText="Events" href="/events" icon={<EventIcon />} />
+        <SideBarItem
+          primaryText="Locations"
+          href="/locations"
+          icon={<PlaceIcon />}
         />
         <SideBarItem
           primaryText="Permissions"
@@ -24,15 +28,11 @@ function SideBar() {
           icon={<KeyIcon />}
         />
         <SideBarItem
-          primaryText="Locations"
-          href="/locations"
-          icon={<PlaceIcon />}
-        />
-        <SideBarItem
           primaryText="Roles"
           href="/roles"
           icon={<AddModeratorIcon />}
         />
+        <SideBarItem primaryText="Users" href="/users" icon={<PeopleIcon />} />
       </List>
       <Divider />
     </Box>
