@@ -38,7 +38,11 @@ function SideBar() {
           href="/roles"
           icon={<AddModeratorIcon />}
         />
-        <SideBarItem primaryText="Users" href="/users" icon={<PeopleIcon />} />
+        <SideBarItem
+          primaryText="UserLogins"
+          href="/userlogins"
+          icon={<PeopleIcon />}
+        />
       </List>
       <Divider />
     </Box>
